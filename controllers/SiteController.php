@@ -60,6 +60,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        \app\assets\VueAsset::register($this->view);
+        $this->view->registerJsFile('js/doc.js', ['depends' => [
+            '\app\assets\AppAsset',
+            '\app\assets\VueAsset',
+        ]]);
+
         return $this->render('index');
     }
 
