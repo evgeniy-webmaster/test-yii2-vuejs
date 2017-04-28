@@ -27,7 +27,7 @@ class Doc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'text'], 'required'],
+            [['title'], 'required'],
             [['text'], 'string'],
             [['title'], 'string', 'max' => 255],
         ];

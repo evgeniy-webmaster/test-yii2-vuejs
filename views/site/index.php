@@ -6,48 +6,44 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+    <div id="docListTpl" style="display: none;">
+        <ul class="list-group">
+            <li class="list-group-item" v-for="doc in docs">#{{doc.id}} <a @click="editDoc(doc.id)" href="#">{{doc.title}}</a> <button @click="deleteDoc(doc.id)" class="btn btn-xs btn-danger">delete</button></li>
+        </ul>
     </div>
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+    <div id="docTpl" style="display: none;">
+        <div>
+            <div class="form-group">
+                <label>
+                    Title
+                    <input class="form-control" type="text" v-model="doc.title" />
+                </label>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+            <div class="form-group">
+                <label>
+                    Text
+                    <textarea class="form-control" v-model="doc.text"></textarea>
+                </label>
             </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+            <div class="form-group">
+                <button @click="save" class="btn btn-primary">Save</button>
             </div>
         </div>
+    </div>
+
+    <div id="docInterface">
+
+        <div class="form-group">
+            <button @click="viewDocList" class="btn btn-default">Documents list</button>
+            <button @click="viewDoc" class="btn btn-success">Create document</button>
+        </div>
+
+        <div v-if="errorMsg !== ''" class="alert alert-danger">{{ errorMsg }}</div>
+        <div v-if="infoMsg !== ''" class="alert alert-success">{{ infoMsg }}</div>
+
+        <doc-list v-if="mode === 'list'" v-on:edit-doc="viewDoc" v-on:delete-doc="deleteDoc" :docs="docs"></doc-list>
+        <doc v-if="mode === 'doc'" v-on:save="save" :doc="currentDoc"></doc>
 
     </div>
 </div>
