@@ -8,7 +8,10 @@ $this->title = 'My Yii Application';
 
     <div id="docListTpl" style="display: none;">
         <ul class="list-group">
-            <li class="list-group-item" v-for="doc in docs">#{{doc.id}} <a @click="editDoc(doc.id)" href="#">{{doc.title}}</a> <button @click="deleteDoc(doc.id)" class="btn btn-xs btn-danger">delete</button></li>
+            <li class="list-group-item" v-for="doc in docs">
+                #{{doc.id}} <a @click="editDoc(doc.id)" href="#">{{doc.title}}</a>
+                <button @click="deleteDoc(doc.id)" class="btn btn-xs btn-danger" style="float: right;">delete</button>
+            </li>
         </ul>
     </div>
 
